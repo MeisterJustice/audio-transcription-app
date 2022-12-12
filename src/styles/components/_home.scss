@@ -17,8 +17,13 @@
     }
   }
   &__main {
-    width: 100%;
     padding: 13px 35px;
+    width: 100%;
+
+    @include responsiveness(phone) {
+      width: 93%;
+      padding: 13px 10px;
+    }
 
     &.h1 {
       @include title;
@@ -36,5 +41,29 @@
     background-color: $color-quaternary;
     border-bottom-left-radius: 17px;
     border-bottom-right-radius: 17px;
+  }
+
+  div.line {
+    margin-bottom: 20px;
+    display: inline;
+  }
+
+  div.media div input,
+  div.media div span,
+  div.line div.time {
+    display: none;
+  }
+
+  .transcript {
+    margin-top: 30px !important;
+    max-height: 39vh;
+    overflow-y: auto;
+    @include row(flex-start);
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 95%;
+    @include responsiveness(phone) {
+      max-height: 50vh;
+    }
   }
 }

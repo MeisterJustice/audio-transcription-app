@@ -1,3 +1,5 @@
+import { Transcript } from "./components";
+
 function App() {
   return (
     <div className="home">
@@ -5,6 +7,9 @@ function App() {
         <div className="home__main">
           <h1 className="home__main h1">Embrace Yourself</h1>
           <div className="home__main author">by Author Unknown</div>
+          <div className="home__main audio">
+            <Transcript />
+          </div>
         </div>
         <div className="home__footer"></div>
       </div>
