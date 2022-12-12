@@ -1,3 +1,40 @@
 .home {
-  color: red;
+  height: 100vh;
+  max-height: 100vh;
+  width: 100%;
+  background-color: $color-tertiary;
+  @include column(center);
+
+  &__box {
+    height: 75%;
+    width: 80%;
+    border-radius: 17px;
+    background-color: $color-white;
+    border: 1px solid $color-quaternary;
+    @include column(space-between);
+    @include responsiveness(phone) {
+      height: 80%;
+    }
+  }
+  &__main {
+    height: 90%;
+    width: 100%;
+    padding: 13px 35px;
+
+    &.h1 {
+      @include title;
+    }
+
+    &.author {
+      @include text;
+      font-weight: 500;
+    }
+  }
+  &__footer {
+    height: 10%;
+    width: 100%;
+    background-color: $color-quaternary;
+    border-bottom-left-radius: 17px;
+    border-bottom-right-radius: 17px;
+  }
 }
