@@ -1,0 +1,21 @@
+$color-black: #000000;
+$color-primary: #f2817c;
+$color-secondary: #808080;
+$color-tertiary: #f4f5fd;
+$color-quaternary: #e9eef5;
+
+$grid-width: 1440px;
+
+// MEDIA SIZE
+$bp-large: 75em; // 1200px;
+$bp-large: 68.75em; // 1100px;
+$bp-large-medium: 62.5em; // 1000px;
+$bp-medium: 56.25em; // 900px;
+$bp-medium-small: 48em; // 768px;
+$bp-small: 37.5em; // 600px;
+$bp-smallest: 31.25em; // 500px;
+$bp-smallest-small: 30em; // 480px;
+$bp-tiny: 375px;
+
+$font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;

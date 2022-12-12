@@ -1,0 +1,7 @@
+.container {
+  max-width: $grid-width;
+  margin: 0 auto;
+  @include responsiveness(phone) {
+    padding: 0 25px;
+  }
+}
