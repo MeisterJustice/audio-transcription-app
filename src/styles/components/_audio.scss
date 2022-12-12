@@ -1,0 +1,15 @@
+.audio {
+  @include row(flex-start);
+  padding: 0 35px;
+  @include responsiveness(phone) {
+    padding: 0 10px;
+  }
+  &__pointer {
+    cursor: pointer;
+  }
+  &__waves {
+    padding: 10px !important;
+    margin: 10px !important;
+    width: 100% !important;
+  }
+}

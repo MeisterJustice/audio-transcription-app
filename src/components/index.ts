@@ -1,3 +1,3 @@
-import Transcript from "./Transcript";
+import Audio from "./Audio";
 
-export { Transcript };
+export { Audio };

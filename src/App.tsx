@@ -1,8 +1,7 @@
 import { useState } from "react";
 import useAudio from "./hooks/useAudio";
-import { FaPlayCircle, FaPauseCircle, FaDownload } from "react-icons/fa";
-// import rangeSlider from 'range-slider-input';
-// import 'range-slider-input/dist/style.css';
+import { FaDownload } from "react-icons/fa";
+import { Audio } from "./components";
 
 const audioFile =
   "https://res.cloudinary.com/djzeufu4j/video/upload/v1670861757/barackobamavictoryspeech_1_oxaxqb.mp3";
@@ -16,46 +15,32 @@ const transcriptTxt =
 function App() {
   const audio = useAudio(audioFile, { volume: 0.8, playbackRate: 1 });
 
-  const [isPlaying, setIsPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
-
-  const handlePlayPause = () => {
-    audio.paused ? audio.play() : audio.pause();
-    setIsPlaying(!isPlaying);
-  };
 
   const handleSpeedSlide = (value: string) => {
     audio.playbackRate = Number(value);
     setSpeed(Number(value));
   };
+
   // add text track
   return (
     <div className="home">
       <div className="home__box container">
         <div className="home__main">
-          <h1 className="home__main h1">Embrace Yourself</h1>
-          <div className="home__main author">by Author Unknown</div>
-          <div className="home__main audio-wrapper">
-            {!isPlaying ? (
-              <FaPlayCircle
-                onClick={handlePlayPause}
-                className="home__pointer"
-                size={40}
-              />
-            ) : (
-              <FaPauseCircle
-                onClick={handlePlayPause}
-                className="home__pointer"
-                size={40}
-              />
-            )}
-          </div>
+          <h1 className="home__main h1">Victory Speech</h1>
+          <div className="home__main author">by Barack Obama</div>
+          <Audio
+            audio={audio}
+            src={audioFile}
+            txt={transcriptTxt}
+            vtt={transcriptFile}
+          />
           <div className="home__main audio">{/* <Transcript /> */}</div>
         </div>
         <div className="home__footer">
           <div className="home__speed-wrapper">
             <div className="home__text">Speed</div>
-            <div className="home__speed">
+            <div>
               <input
                 onChange={(e) => handleSpeedSlide(e.target.value)}
                 type="range"
@@ -63,6 +48,7 @@ function App() {
                 max="2"
                 step="0.1"
                 value={speed}
+                className="home__speed-slider"
               />
               <div className="home__speed-value">
                 <div>0.5</div>
