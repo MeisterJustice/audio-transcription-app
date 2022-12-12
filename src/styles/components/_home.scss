@@ -34,36 +34,59 @@
       font-weight: 500;
       margin-top: -15px;
     }
+
+    &.audio-wrapper {
+      @include row(flex-start);
+      margin-top: 20px;
+    }
+    &.audio-controls {
+      width: 2px;
+      height: 50px;
+      // border-radius: 100%;
+      background-color: $color-black;
+      @include row(center);
+    }
   }
   &__footer {
     height: 10%;
-    width: 100%;
     background-color: $color-quaternary;
     border-bottom-left-radius: 17px;
     border-bottom-right-radius: 17px;
-  }
+    @include row(space-between);
+    width: 100%;
 
-  div.line {
-    margin-bottom: 20px;
-    display: inline;
-  }
-
-  div.media div input,
-  div.media div span,
-  div.line div.time {
-    display: none;
-  }
-
-  .transcript {
-    margin-top: 30px !important;
-    max-height: 39vh;
-    overflow-y: auto;
-    @include row(flex-start);
-    align-items: flex-start;
-    flex-wrap: wrap;
-    width: 95%;
-    @include responsiveness(phone) {
-      max-height: 50vh;
+    &.download-wrapper {
+      text-decoration: none;
+      width: 100%;
+      padding: 0 35px;
+      @include row(flex-end);
+      gap: 10px;
+      @include responsiveness(phone) {
+        padding: 0 10px;
+      }
     }
+  }
+
+  &__speed-wrapper {
+    padding: 0 35px;
+    @include responsiveness(phone) {
+      padding: 0 10px;
+    }
+  }
+  &__speed {
+    margin-top: 5px;
+  }
+
+  &__speed-value {
+    @include row(space-between);
+    font-size: 10px;
+  }
+  &__text {
+    @include text;
+    font-size: 13px;
+    color: $color-black;
+  }
+  &__pointer {
+    cursor: pointer;
   }
 }
