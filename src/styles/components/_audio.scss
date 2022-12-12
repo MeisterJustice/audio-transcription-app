@@ -1,5 +1,4 @@
 .audio {
-  @include row(flex-start);
   padding: 0 35px;
   @include responsiveness(phone) {
     padding: 0 10px;
@@ -11,5 +10,32 @@
     padding: 10px !important;
     margin: 10px !important;
     width: 100% !important;
+  }
+  &__wave {
+    @include row(flex-start);
+  }
+
+  div.media div.transcript div.active {
+    background-color: $color-primary;
+  }
+  div.media div.player {
+    display: none;
+  }
+  div.transcript {
+    max-height: 38vh;
+    overflow-y: scroll;
+    @include row(flex-start);
+    flex-wrap: wrap;
+  }
+  div.media span,
+  div.media input,
+  div.media .time {
+    display: none;
+  }
+
+  div.media .line {
+    margin-bottom: 10px;
+    padding: 3px;
+    border-radius: 4px;
   }
 }

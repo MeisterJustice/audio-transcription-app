@@ -1,7 +1,16 @@
-import { useState } from "react";
+import { createContext, useState } from "react";
 import useAudio from "./hooks/useAudio";
 import { FaDownload } from "react-icons/fa";
 import { Audio } from "./components";
+
+const theme = {
+  primary: "#f2817c",
+  secondary: "#808080",
+  tertiary: "#f4f5fd",
+  quaternary: "#e9eef5",
+};
+
+export const ThemeContext = createContext(theme);
 
 const audioFile =
   "https://res.cloudinary.com/djzeufu4j/video/upload/v1670861757/barackobamavictoryspeech_1_oxaxqb.mp3";
@@ -24,51 +33,52 @@ function App() {
 
   // add text track
   return (
-    <div className="home">
-      <div className="home__box container">
-        <div className="home__main">
-          <h1 className="home__main h1">Victory Speech</h1>
-          <div className="home__main author">by Barack Obama</div>
-          <Audio
-            audio={audio}
-            src={audioFile}
-            txt={transcriptTxt}
-            vtt={transcriptFile}
-          />
-          <div className="home__main audio">{/* <Transcript /> */}</div>
-        </div>
-        <div className="home__footer">
-          <div className="home__speed-wrapper">
-            <div className="home__text">Speed</div>
-            <div>
-              <input
-                onChange={(e) => handleSpeedSlide(e.target.value)}
-                type="range"
-                min="0.5"
-                max="2"
-                step="0.1"
-                value={speed}
-                className="home__speed-slider"
-              />
-              <div className="home__speed-value">
-                <div>0.5</div>
-                <div>2.0</div>
+    <ThemeContext.Provider value={theme}>
+      <div className="home">
+        <div className="home__box container">
+          <div className="home__main">
+            <h1 className="home__main h1">Victory Speech</h1>
+            <div className="home__main author">by Barack Obama</div>
+            <Audio
+              audio={audio}
+              src={audioFile}
+              txt={transcriptTxt}
+              vtt={transcriptFile}
+            />
+          </div>
+          <div className="home__footer">
+            <div className="home__speed-wrapper">
+              <div className="home__text">Speed</div>
+              <div>
+                <input
+                  onChange={(e) => handleSpeedSlide(e.target.value)}
+                  type="range"
+                  min="0.5"
+                  max="2"
+                  step="0.1"
+                  value={speed}
+                  className="home__speed-slider"
+                />
+                <div className="home__speed-value">
+                  <div>0.5</div>
+                  <div>2.0</div>
+                </div>
               </div>
             </div>
+            <a
+              href={transcriptTxt}
+              rel="noreferrer"
+              download
+              target="_blank"
+              className="home__footer home__pointer download-wrapper"
+            >
+              <div className="home__text">Download Transcription</div>
+              <FaDownload color="#000000" />
+            </a>
           </div>
-          <a
-            href={transcriptTxt}
-            rel="noreferrer"
-            download
-            target="_blank"
-            className="home__footer home__pointer download-wrapper"
-          >
-            <div className="home__text">Download Transcription</div>
-            <FaDownload color="#000000" />
-          </a>
         </div>
       </div>
-    </div>
+    </ThemeContext.Provider>
   );
 }
 
