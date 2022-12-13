@@ -1,8 +1,8 @@
-import { useEffect, useState, memo, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { FaPlayCircle, FaPauseCircle } from "react-icons/fa";
 import ReactWaves from "@dschoon/react-waves";
-import { Player } from "webvtt-player";
 import { ThemeContext } from "../App";
+import Transcript from "./Transcript";
 
 interface AudioProps {
   src: string;
@@ -14,19 +14,16 @@ interface AudioProps {
 const Audio = ({ src, vtt, txt, audio }: AudioProps) => {
   const theme = useContext(ThemeContext);
 
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const trackRef = useRef<HTMLTrackElement>(null);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(audio.currentTime);
 
   const handlePlayPause = () => {
-    audio.paused ? audio.play() : audio.pause();
+    const audioSrc = audioRef.current!;
+    audioSrc.paused ? audioSrc.play() : audioSrc.pause();
     setIsPlaying(!isPlaying);
-  };
-
-  const handlePosChange = (pos?: number) => {
-    if (pos !== currentTime) {
-      audio.currentTime = pos!;
-      setCurrentTime(pos!);
-    }
   };
 
   return (
@@ -45,6 +42,15 @@ const Audio = ({ src, vtt, txt, audio }: AudioProps) => {
             size={40}
           />
         )}
+        <audio
+          className="audio__audio"
+          controls
+          crossOrigin="anonymous"
+          ref={audioRef}
+        >
+          <source src={src} />
+          <track default kind="subtitles" src={vtt} ref={trackRef} />
+        </audio>
         <ReactWaves
           audioFile={src}
           className={"audio__waves"}
@@ -59,15 +65,21 @@ const Audio = ({ src, vtt, txt, audio }: AudioProps) => {
             progressColor: theme.primary,
             responsive: true,
             waveColor: theme.secondary,
+            interact: false,
           }}
           playing={isPlaying}
           volume={0}
-          onPosChange={handlePosChange}
+          pos={currentTime}
         />
       </div>
-      <Player audio={src} transcript={vtt} />
+      {/* <Player audio={src} transcript={vtt} /> */}
+
+      {/* {trackRef.current && (
+
+      )} */}
+      <Transcript track={trackRef} audio={audioRef} />
     </div>
   );
 };
 
-export default memo(Audio);
+export default Audio;

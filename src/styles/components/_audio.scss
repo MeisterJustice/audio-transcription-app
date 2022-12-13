@@ -6,6 +6,9 @@
   &__pointer {
     cursor: pointer;
   }
+  &__audio {
+    display: none;
+  }
   &__waves {
     padding: 10px !important;
     margin: 10px !important;
