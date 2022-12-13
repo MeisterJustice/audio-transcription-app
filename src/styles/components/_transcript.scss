@@ -5,4 +5,13 @@
   flex-wrap: wrap;
   column-gap: 3px;
   row-gap: 10px;
+
+  &__line {
+    padding: 3px;
+    border-radius: 4px;
+    &.active {
+      background-color: $color-primary;
+      transition: background-color 0.5s ease;
+    }
+  }
 }

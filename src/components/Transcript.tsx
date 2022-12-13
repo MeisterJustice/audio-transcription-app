@@ -7,49 +7,64 @@ const Transcript = ({
   track: RefObject<HTMLTrackElement>;
   audio: RefObject<HTMLAudioElement>;
 }) => {
-  const [arrayTrack, setArrayTrack] = useState<any[]>([]);
-  const [count, setCount] = useState(0);
   const [transcriptLines, setTranscriptLines] = useState<any[]>([]);
+  const [currentText, setCurrentText] = useState<string>("");
 
-  useEffect(() => {
+  const handleTrackLoad = () => {
     const lines: any[] = [];
     track.current?.addEventListener("load", () => {
       const arr = Object.values(track?.current?.track?.cues!);
-      setArrayTrack(arr);
-
       for (let i = 0; i < arr.length; i++) {
-        console.log(arr[i]);
-        lines.push(
-          <TranscriptLine
-            key={i}
-            cue={arr[i]}
-            active={arr[i]?.startTime === audio.current?.currentTime}
-          />
-        );
+        lines.push(arr[i]);
       }
       setTranscriptLines(lines);
     });
-    // }
-  }, [track, audio, count]);
+  };
 
-  return <div className="transcript">{transcriptLines}</div>;
-};
+  const handleTrackTime = () => {
+    track.current?.addEventListener("cuechange", () => {
+      console.log("changing", track.current?.track?.activeCues![0]);
+      // @ts-ignore
+      const text = track.current?.track?.activeCues![0]?.text || "";
+      setCurrentText(text);
+    });
+  };
 
-const TranscriptLine = ({ cue, active }: { cue: any; active: boolean }) => {
-  const text = cue.text;
-  const start = cue.startTime;
-  const end = cue.endTime;
+  useEffect(() => {
+    handleTrackLoad();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [track, audio]);
 
-  // useEffect(() => {
-  //     a.addEventListener(("onenter") => {
-
-  //     })
-  // }, [cue])
+  useEffect(() => {
+    handleTrackTime();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [track]);
 
   return (
-    <div
-      className={`transcript__line ${active ? "transcript__line--active" : ""}`}
-    >
+    <div className="transcript">
+      {transcriptLines?.map((item, index) => (
+        <TranscriptLine
+          key={index}
+          cue={item}
+          active={item?.text === currentText}
+        />
+      ))}
+    </div>
+  );
+};
+
+const TranscriptLine = ({
+  cue,
+  active,
+}: {
+  cue: TextTrackCue;
+  active: boolean;
+}) => {
+  // @ts-ignore
+  const text = cue.text;
+
+  return (
+    <div className={`transcript__line ${active ? "active" : ""}`}>
       <div className="transcript__line__text">{text}</div>
     </div>
   );
