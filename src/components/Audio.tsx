@@ -1,4 +1,4 @@
-import { useState, useContext, useRef } from "react";
+import { useState, useContext, RefObject } from "react";
 import { FaPlayCircle, FaPauseCircle } from "react-icons/fa";
 import ReactWaves from "@dschoon/react-waves";
 import { ThemeContext } from "../App";
@@ -7,21 +7,17 @@ import Transcript from "./Transcript";
 interface AudioProps {
   src: string;
   vtt: string;
-  txt: string;
-  audio: HTMLAudioElement;
+  track: RefObject<HTMLTrackElement>;
+  audio: RefObject<HTMLAudioElement>;
 }
 
-const Audio = ({ src, vtt, txt, audio }: AudioProps) => {
+const Audio = ({ src, vtt, audio, track }: AudioProps) => {
   const theme = useContext(ThemeContext);
 
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const trackRef = useRef<HTMLTrackElement>(null);
-
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(audio.currentTime);
 
   const handlePlayPause = () => {
-    const audioSrc = audioRef.current!;
+    const audioSrc = audio.current!;
     audioSrc.paused ? audioSrc.play() : audioSrc.pause();
     setIsPlaying(!isPlaying);
   };
@@ -46,10 +42,10 @@ const Audio = ({ src, vtt, txt, audio }: AudioProps) => {
           className="audio__audio"
           controls
           crossOrigin="anonymous"
-          ref={audioRef}
+          ref={audio}
         >
           <source src={src} />
-          <track default kind="subtitles" src={vtt} ref={trackRef} />
+          <track default kind="subtitles" src={vtt} ref={track} />
         </audio>
         <ReactWaves
           audioFile={src}
@@ -69,15 +65,9 @@ const Audio = ({ src, vtt, txt, audio }: AudioProps) => {
           }}
           playing={isPlaying}
           volume={0}
-          pos={currentTime}
         />
       </div>
-      {/* <Player audio={src} transcript={vtt} /> */}
-
-      {/* {trackRef.current && (
-
-      )} */}
-      <Transcript track={trackRef} audio={audioRef} />
+      <Transcript track={track} audio={audio} />
     </div>
   );
 };

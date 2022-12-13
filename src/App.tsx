@@ -1,5 +1,4 @@
-import { createContext, useState } from "react";
-import useAudio from "./hooks/useAudio";
+import { createContext, useRef, useState } from "react";
 import { FaDownload } from "react-icons/fa";
 import { Audio } from "./components";
 
@@ -22,16 +21,18 @@ const transcriptTxt =
   "https://res.cloudinary.com/djzeufu4j/raw/upload/v1670868859/barackobamavictoryspeech.mp3_1_rmhd49.txt";
 
 function App() {
-  const audio = useAudio(audioFile, { volume: 0.8, playbackRate: 1 });
+  const audio = useRef<HTMLAudioElement>(null);
+  const track = useRef<HTMLTrackElement>(null);
 
   const [speed, setSpeed] = useState(1);
 
   const handleSpeedSlide = (value: string) => {
-    audio.playbackRate = Number(value);
-    setSpeed(Number(value));
+    if (audio?.current) {
+      audio.current.playbackRate = Number(value);
+      setSpeed(Number(value));
+    }
   };
 
-  // add text track
   return (
     <ThemeContext.Provider value={theme}>
       <div className="home">
@@ -41,8 +42,8 @@ function App() {
             <div className="home__main author">by Barack Obama</div>
             <Audio
               audio={audio}
+              track={track}
               src={audioFile}
-              txt={transcriptTxt}
               vtt={transcriptFile}
             />
           </div>
