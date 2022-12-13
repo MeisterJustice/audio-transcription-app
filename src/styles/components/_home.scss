@@ -55,6 +55,7 @@
       text-decoration: none;
       width: 100%;
       padding: 0 35px;
+      cursor: pointer;
       @include row(flex-end);
       gap: 10px;
       @include responsiveness(phone) {

@@ -1,6 +1,7 @@
 import { createContext, useRef, useState } from "react";
 import { FaDownload } from "react-icons/fa";
 import { Audio } from "./components";
+import txtFile from "./asset/audio.txt";
 
 const theme = {
   primary: "#f2817c",
@@ -31,6 +32,18 @@ function App() {
       audio.current.playbackRate = Number(value);
       setSpeed(Number(value));
     }
+  };
+
+  const handleDownloadTxt = async () => {
+    const resp = await fetch(txtFile);
+    const audioTxtData = await resp.text();
+
+    const element = document.createElement("a");
+    const file = new Blob([audioTxtData], { type: "text/plain" });
+    element.href = URL.createObjectURL(file);
+    element.download = "transcript.txt";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
   };
 
   return (
@@ -66,16 +79,13 @@ function App() {
                 </div>
               </div>
             </div>
-            <a
-              href={transcriptTxt}
-              rel="noreferrer"
-              download
-              target="_blank"
-              className="home__footer home__pointer download-wrapper"
+            <div
+              onClick={handleDownloadTxt}
+              className="home__footer download-wrapper"
             >
               <div className="home__text">Download Transcription</div>
               <FaDownload color="#000000" />
-            </a>
+            </div>
           </div>
         </div>
       </div>
