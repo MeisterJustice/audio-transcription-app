@@ -5,6 +5,12 @@
   flex-wrap: wrap;
   column-gap: 3px;
   row-gap: 10px;
+  @include responsiveness(phone) {
+    max-height: 43vh;
+  }
+  @include responsiveness(phone-tiny) {
+    max-height: 34vh;
+  }
 
   &__line {
     padding: 3px;

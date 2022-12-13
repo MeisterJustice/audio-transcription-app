@@ -17,28 +17,4 @@
   &__wave {
     @include row(flex-start);
   }
-
-  div.media div.transcript div.active {
-    background-color: $color-primary;
-  }
-  div.media div.player {
-    display: none;
-  }
-  div.transcript {
-    max-height: 38vh;
-    overflow-y: scroll;
-    @include row(flex-start);
-    flex-wrap: wrap;
-  }
-  div.media span,
-  div.media input,
-  div.media .time {
-    display: none;
-  }
-
-  div.media .line {
-    margin-bottom: 10px;
-    padding: 3px;
-    border-radius: 4px;
-  }
 }
